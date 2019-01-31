@@ -51,6 +51,7 @@ local override_resolver = gui.GetValue("rbot_resolver_override");
 local auntrusted = (gui.GetValue("msc_restrict") + 1);
 --------- gun settings
 local weapon_select = 1;
+local visuals_select = 1;
 ------- some func
 local skinc = gui.GetValue("msc_skinchanger");
 local playerlist = gui.GetValue("msc_playerlist");
@@ -1268,11 +1269,409 @@ function draw_callback()
 			end
 		end
 		SenseUI.EndTab();
-		if SenseUI.BeginTab( "vissettings", SenseUI.Icons.visuals ) then
-			if SenseUI.BeginGroup( "Work In Progress", "Work In Progress", 25, 25, 235, 70 ) then
-				SenseUI.Label("Work In Progress", true);
-				SenseUI.Label("Maybe its impossible", true);
-				SenseUI.Label("To make this tab", true);
+if SenseUI.BeginTab( "vissettings", SenseUI.Icons.visuals ) then
+		
+             if SenseUI.BeginGroup( "visuals2", "Main", 285, 25, 235, 550 ) then
+			 local esp_enable = gui.GetValue("esp_active");
+			 local vis_antiscreenshot = gui.GetValue("vis_antiscreenshot");
+			 local vis_antiobs = gui.GetValue("vis_antiobs");
+			 local vis_farmodels = gui.GetValue("vis_farmodels");
+			 local esp_teambasedcolors = gui.GetValue("esp_teambasedcolors");
+			 local historyticks = (gui.GetValue("vis_historyticks") + 1);
+			 local historyticksstyle = (gui.GetValue("vis_historyticks_style") + 1);
+			 local esp_teambasedtextcolor = (gui.GetValue("esp_teambasedtextcolor") + 1);
+			 local esp_weaponstyle = (gui.GetValue("esp_weaponstyle") + 1)
+			 local p_glowscale = (gui.GetValue("vis_glowalpha") * 100);
+			 
+			 esp_enable = SenseUI.Checkbox("Enable ESP", esp_enable);
+				gui.SetValue("esp_active", esp_enable);
+				
+                SenseUI.Label("Visuals Toggle Key");
+				vis_togglekey = SenseUI.Bind("vis_togglekey", true, vis_togglekey);
+				gui.SetValue("vis_togglekey", vis_togglekey);
+				
+                SenseUI.Label("History ticks");
+				historyticks = SenseUI.Combo("historyticks", { "Off", "All Ticks", "Last Tick" }, historyticks);
+				gui.SetValue("vis_historyticks", historyticks-1);
+				
+				SenseUI.Label("History ticks style");
+				historyticksstyle = SenseUI.Combo("historyticksstyle", { "Model", "Flat Model", "Hitbox" }, historyticksstyle);
+				gui.SetValue("vis_historyticks_style", historyticksstyle-1);
+				
+				p_glowscale = SenseUI.Slider("Glow Alpha", 0, 100, "%", "0%", "100%", false, p_glowscale);
+				gui.SetValue("vis_glowalpha", p_glowscale / 100);
+				
+				 vis_farmodels = SenseUI.Checkbox("Render Far Models", vis_farmodels);
+				gui.SetValue("vis_farmodels", vis_farmodels);
+				
+				esp_teambasedcolors = SenseUI.Checkbox("Team based colors", esp_teambasedcolors);
+				gui.SetValue("esp_teambasedcolors", esp_teambasedcolors);
+				
+				SenseUI.Label("Team based text color");
+				esp_teambasedtextcolor = SenseUI.Combo("esp_teambasedtextcolor", { "Off", "Box color", "Visible color", "Invisible color" }, esp_teambasedtextcolor);
+				gui.SetValue("esp_teambasedtextcolor", esp_teambasedtextcolor-1);
+				
+				SenseUI.Label("Weapon style");
+				esp_weaponstyle = SenseUI.Combo("esp_weaponstyle", { "Icons", "Name" }, esp_weaponstyle);
+				gui.SetValue("esp_weaponstyle", esp_weaponstyle-1);
+				
+				vis_antiscreenshot = SenseUI.Checkbox("Hide from screenshot", vis_antiscreenshot);
+				gui.SetValue("vis_antiscreenshot", vis_antiscreenshot);
+				
+				vis_antiobs = SenseUI.Checkbox("Hide from OBS", vis_antiobs);
+				gui.SetValue("vis_antiobs", vis_antiobs);
+		
+			 
+			 end 
+			 SenseUI.EndGroup();
+			 
+		if SenseUI.BeginGroup( "Visuals settings", "Visuals settings", 25, 25, 235, 60 ) then
+		SenseUI.Label("Visuals setting selection");
+		visuals_select = SenseUI.Combo("nvmd_visuals", { "Enemies", "Teammates", "Yourself", "Weapons", "Other", "Misc" }, visuals_select );
+		end
+		SenseUI.EndGroup();
+		
+			if SenseUI.BeginGroup( "Visuals", "Visuals", 25, 100, 235, 475 ) then
+				
+				
+				
+				
+				
+				if visuals_select == 1 then
+				
+				
+				 
+				 local espwep_enable = gui.GetValue("esp_filter_enemy");
+				 local espdormantenemy = gui.GetValue("esp_dormant_enemy");
+				 local espsoundsenemy = gui.GetValue("esp_sounds_enemy");
+				 
+				 local espvisibility_enemy = (gui.GetValue("esp_visibility_enemy") + 1);
+				 
+				 
+				 espwep_enable = SenseUI.Checkbox("Enable", espwep_enable);
+				gui.SetValue("esp_filter_enemy", espwep_enable);
+				
+				SenseUI.Label("Visibility");
+				espvisibility_enemy = SenseUI.Combo("espvisibility_enemy", { "Always", "Only Visible", "Only Invisible" }, espvisibility_enemy);
+				gui.SetValue("esp_visibility_enemy", espvisibility_enemy-1);
+				
+			    espdormantenemy = SenseUI.Checkbox("Dormant", espdormantenemy);
+				gui.SetValue("esp_dormant_enemy", espdormantenemy);
+				
+			    espdormantenemy = SenseUI.Checkbox("Dormant", espdormantenemy);
+				gui.SetValue("esp_dormant_enemy", espdormantenemy);
+				
+				
+				
+				
+					else if visuals_select == 2 then
+					
+					local rev_autowall = (gui.GetValue("rbot_revolver_autowall") + 1);
+					local rev_hitchance = gui.GetValue("rbot_revolver_hitchance");
+					local rev_mindamage = gui.GetValue("rbot_revolver_mindamage");
+					local rev_hitprior = (gui.GetValue("rbot_revolver_hitbox") + 1);
+					local rev_bodyaim = (gui.GetValue("rbot_revolver_hitbox_bodyaim") + 1);
+					local rev_method = (gui.GetValue("rbot_revolver_hitbox_method") + 1);
+					local rev_baimX = gui.GetValue("rbot_revolver_bodyaftershots");
+					local rev_baimHP = gui.GetValue("rbot_revolver_bodyifhplower");
+					local rev_hscale = (gui.GetValue("rbot_revolver_hitbox_head_ps") * 100);
+					local rev_nscale = (gui.GetValue("rbot_revolver_hitbox_neck_ps") * 100);
+					local rev_cscale = (gui.GetValue("rbot_revolver_hitbox_chest_ps") * 100);
+					local rev_sscale = (gui.GetValue("rbot_revolver_hitbox_stomach_ps") * 100);
+					local rev_pscale = (gui.GetValue("rbot_revolver_hitbox_pelvis_ps") * 100);
+					local rev_ascale = (gui.GetValue("rbot_revolver_hitbox_arms_ps") * 100);
+					local rev_lscale = (gui.GetValue("rbot_revolver_hitbox_legs_ps") * 100);
+					local rev_autoscale = gui.GetValue("rbot_revolver_hitbox_auto_ps");
+					local rev_autoscales = (gui.GetValue("rbot_revolver_hitbox_auto_ps_max") * 100);
+					
+					rev_hscale = SenseUI.Slider("Head Scale", 0, 100, "%", "0%", "100%", false, rev_hscale);
+					gui.SetValue("rbot_revolver_hitbox_head_ps", rev_hscale / 100);
+					rev_nscale = SenseUI.Slider("Neck Scale", 0, 100, "%", "0%", "100%", false, rev_nscale);
+					gui.SetValue("rbot_revolver_hitbox_neck_ps", rev_nscale / 100);
+					rev_cscale = SenseUI.Slider("Chest Scale", 0, 100, "%", "0%", "100%", false, rev_cscale);
+					gui.SetValue("rbot_revolver_hitbox_chest_ps", rev_cscale / 100);
+					rev_sscale = SenseUI.Slider("Stomach Scale", 0, 100, "%", "0%", "100%", false, rev_sscale);
+					gui.SetValue("rbot_revolver_hitbox_stomach_ps", rev_sscale / 100);
+					rev_pscale = SenseUI.Slider("Pelvis Scale", 0, 100, "%", "0%", "100%", false, rev_pscale);
+					gui.SetValue("rbot_revolver_hitbox_pelvis_ps", rev_pscale / 100);
+					rev_ascale = SenseUI.Slider("Arms Scale", 0, 100, "%", "0%", "100%", false, rev_ascale);
+					gui.SetValue("rbot_revolver_hitbox_arms_ps", rev_ascale / 100);
+					rev_lscale = SenseUI.Slider("Legs Scale", 0, 100, "%", "0%", "100%", false, rev_lscale);
+					gui.SetValue("rbot_revolver_hitbox_legs_ps", rev_lscale / 100);
+					rev_autoscale = SenseUI.Checkbox("Auto Scale", rev_autoscale);
+					gui.SetValue("rbot_revolver_hitbox_auto_ps", rev_autoscale);
+					rev_autoscales = SenseUI.Slider("Auto Scale Max", 0, 100, "%", "0%", "100%", false, rev_autoscales);
+					gui.SetValue("rbot_revolver_hitbox_auto_ps_max", rev_autoscales / 100);
+					local revolver_head = gui.GetValue("rbot_revolver_hitbox_head");
+					revolver_head = SenseUI.Checkbox("Head Points", revolver_head);
+					gui.SetValue("rbot_revolver_hitbox_head", revolver_head);
+					local revolver_neck = gui.GetValue("rbot_revolver_hitbox_neck");
+					revolver_neck = SenseUI.Checkbox("Neck Points", revolver_neck);
+					gui.SetValue("rbot_revolver_hitbox_neck", revolver_neck);
+					local revolver_chest = gui.GetValue("rbot_revolver_hitbox_chest");
+					revolver_chest = SenseUI.Checkbox("Chest Points", revolver_chest);
+					gui.SetValue("rbot_revolver_hitbox_chest", revolver_chest);
+					local revolver_stomach = gui.GetValue("rbot_revolver_hitbox_stomach");
+					revolver_stomach = SenseUI.Checkbox("Stomach Points", revolver_stomach);
+					gui.SetValue("rbot_revolver_hitbox_stomach", revolver_stomach);
+					local revolver_pelvis = gui.GetValue("rbot_revolver_hitbox_pelvis");
+					revolver_pelvis = SenseUI.Checkbox("Pelvis Points", revolver_pelvis);
+					gui.SetValue("rbot_revolver_hitbox_pelvis", revolver_pelvis);
+					local revolver_arms = gui.GetValue("rbot_revolver_hitbox_arms");
+					revolver_arms = SenseUI.Checkbox("Arms Points", revolver_arms);
+					gui.SetValue("rbot_revolver_hitbox_arms", revolver_arms);
+					local revolver_legs = gui.GetValue("rbot_revolver_hitbox_legs");
+					revolver_legs = SenseUI.Checkbox("Legs Points", revolver_legs);
+					gui.SetValue("rbot_revolver_hitbox_legs", revolver_legs);
+						else if visuals_select == 3 then
+						
+						local smg_autowall = (gui.GetValue("rbot_smg_autowall") + 1);
+						local smg_hitchance = gui.GetValue("rbot_smg_hitchance");
+						local smg_mindamage = gui.GetValue("rbot_smg_mindamage");
+						local smg_hitprior = (gui.GetValue("rbot_smg_hitbox") + 1);
+						local smg_bodyaim = (gui.GetValue("rbot_smg_hitbox_bodyaim") + 1);
+						local smg_method = (gui.GetValue("rbot_smg_hitbox_method") + 1);
+						local smg_baimX = gui.GetValue("rbot_smg_bodyaftershots");
+						local smg_baimHP = gui.GetValue("rbot_smg_bodyifhplower");
+						local smg_hscale = (gui.GetValue("rbot_smg_hitbox_head_ps") * 100);
+						local smg_nscale = (gui.GetValue("rbot_smg_hitbox_neck_ps") * 100);
+						local smg_cscale = (gui.GetValue("rbot_smg_hitbox_chest_ps") * 100);
+						local smg_sscale = (gui.GetValue("rbot_smg_hitbox_stomach_ps") * 100);
+						local smg_pscale = (gui.GetValue("rbot_smg_hitbox_pelvis_ps") * 100);
+						local smg_ascale = (gui.GetValue("rbot_smg_hitbox_arms_ps") * 100);
+						local smg_lscale = (gui.GetValue("rbot_smg_hitbox_legs_ps") * 100);
+						local smg_autoscale = gui.GetValue("rbot_smg_hitbox_auto_ps");
+						local smg_autoscales = (gui.GetValue("rbot_smg_hitbox_auto_ps_max") * 100);
+						
+						
+						smg_hscale = SenseUI.Slider("Head Scale", 0, 100, "%", "0%", "100%", false, smg_hscale);
+						gui.SetValue("rbot_smg_hitbox_head_ps", smg_hscale / 100);
+						smg_nscale = SenseUI.Slider("Neck Scale", 0, 100, "%", "0%", "100%", false, smg_nscale);
+						gui.SetValue("rbot_smg_hitbox_neck_ps", smg_nscale / 100);
+						smg_cscale = SenseUI.Slider("Chest Scale", 0, 100, "%", "0%", "100%", false, smg_cscale);
+						gui.SetValue("rbot_smg_hitbox_chest_ps", smg_cscale / 100);
+						smg_sscale = SenseUI.Slider("Stomach Scale", 0, 100, "%", "0%", "100%", false, smg_sscale);
+						gui.SetValue("rbot_smg_hitbox_stomach_ps", smg_sscale / 100);
+						smg_pscale = SenseUI.Slider("Pelvis Scale", 0, 100, "%", "0%", "100%", false, smg_pscale);
+						gui.SetValue("rbot_smg_hitbox_pelvis_ps", smg_pscale / 100);
+						smg_ascale = SenseUI.Slider("Arms Scale", 0, 100, "%", "0%", "100%", false, smg_ascale);
+						gui.SetValue("rbot_smg_hitbox_arms_ps", smg_ascale / 100);
+						smg_lscale = SenseUI.Slider("Legs Scale", 0, 100, "%", "0%", "100%", false, smg_lscale);
+						gui.SetValue("rbot_smg_hitbox_legs_ps", smg_lscale / 100);
+						smg_autoscale = SenseUI.Checkbox("Auto Scale", smg_autoscale);
+						gui.SetValue("rbot_smg_hitbox_auto_ps", smg_autoscale);
+						smg_autoscales = SenseUI.Slider("Auto Scale Max", 0, 100, "%", "0%", "100%", false, smg_autoscales);
+						gui.SetValue("rbot_smg_hitbox_auto_ps_max", smg_autoscales / 100);
+						local smg_head = gui.GetValue("rbot_smg_hitbox_head");
+						smg_head = SenseUI.Checkbox("Head Points", smg_head);
+						gui.SetValue("rbot_smg_hitbox_head", smg_head);
+						local smg_neck = gui.GetValue("rbot_smg_hitbox_neck");
+						smg_neck = SenseUI.Checkbox("Neck Points", smg_neck);
+						gui.SetValue("rbot_smg_hitbox_neck", smg_neck);
+						local smg_chest = gui.GetValue("rbot_smg_hitbox_chest");
+						smg_chest = SenseUI.Checkbox("Chest Points", smg_chest);
+						gui.SetValue("rbot_smg_hitbox_chest", smg_chest);
+						local smg_stomach = gui.GetValue("rbot_smg_hitbox_stomach");
+						smg_stomach = SenseUI.Checkbox("Stomach Points", smg_stomach);
+						gui.SetValue("rbot_smg_hitbox_stomach", smg_stomach);
+						local smg_pelvis = gui.GetValue("rbot_smg_hitbox_pelvis");
+						smg_pelvis = SenseUI.Checkbox("Pelvis Points", smg_pelvis);
+						gui.SetValue("rbot_smg_hitbox_pelvis", smg_pelvis);
+						local smg_arms = gui.GetValue("rbot_smg_hitbox_arms");
+						smg_arms = SenseUI.Checkbox("Arms Points", smg_arms);
+						gui.SetValue("rbot_smg_hitbox_arms", smg_arms);
+						local smg_legs = gui.GetValue("rbot_smg_hitbox_legs");
+						smg_legs = SenseUI.Checkbox("Legs Points", smg_legs);
+						gui.SetValue("rbot_smg_hitbox_legs", smg_legs);						
+							else if visuals_select == 4 then
+							
+							local rifle_autowall = (gui.GetValue("rbot_rifle_autowall") + 1);
+							local rifle_hitchance = gui.GetValue("rbot_rifle_hitchance");
+							local rifle_mindamage = gui.GetValue("rbot_rifle_mindamage");
+							local rifle_hitprior = (gui.GetValue("rbot_rifle_hitbox") + 1);
+							local rifle_bodyaim = (gui.GetValue("rbot_rifle_hitbox_bodyaim") + 1);
+							local rifle_method = (gui.GetValue("rbot_rifle_hitbox_method") + 1);
+							local rifle_baimX = gui.GetValue("rbot_rifle_bodyaftershots");
+							local rifle_baimHP = gui.GetValue("rbot_rifle_bodyifhplower");
+							local rifle_hscale = (gui.GetValue("rbot_rifle_hitbox_head_ps") * 100);
+							local rifle_nscale = (gui.GetValue("rbot_rifle_hitbox_neck_ps") * 100);
+							local rifle_cscale = (gui.GetValue("rbot_rifle_hitbox_chest_ps") * 100);
+							local rifle_sscale = (gui.GetValue("rbot_rifle_hitbox_stomach_ps") * 100);
+							local rifle_pscale = (gui.GetValue("rbot_rifle_hitbox_pelvis_ps") * 100);
+							local rifle_ascale = (gui.GetValue("rbot_rifle_hitbox_arms_ps") * 100);
+							local rifle_lscale = (gui.GetValue("rbot_rifle_hitbox_legs_ps") * 100);
+							local rifle_autoscale = gui.GetValue("rbot_rifle_hitbox_auto_ps");
+							local rifle_autoscales = (gui.GetValue("rbot_rifle_hitbox_auto_ps_max") * 100);
+							
+							
+							
+							rifle_hscale = SenseUI.Slider("Head Scale", 0, 100, "%", "0%", "100%", false, rifle_hscale);
+							gui.SetValue("rbot_rifle_hitbox_head_ps", rifle_hscale / 100);
+							rifle_nscale = SenseUI.Slider("Neck Scale", 0, 100, "%", "0%", "100%", false, rifle_nscale);
+							gui.SetValue("rbot_rifle_hitbox_neck_ps", rifle_nscale / 100);
+							rifle_cscale = SenseUI.Slider("Chest Scale", 0, 100, "%", "0%", "100%", false, rifle_cscale);
+							gui.SetValue("rbot_rifle_hitbox_chest_ps", rifle_cscale / 100);
+							rifle_sscale = SenseUI.Slider("Stomach Scale", 0, 100, "%", "0%", "100%", false, rifle_sscale);
+							gui.SetValue("rbot_rifle_hitbox_stomach_ps", rifle_sscale / 100);
+							rifle_pscale = SenseUI.Slider("Pelvis Scale", 0, 100, "%", "0%", "100%", false, rifle_pscale);
+							gui.SetValue("rbot_rifle_hitbox_pelvis_ps", rifle_pscale / 100);
+							rifle_ascale = SenseUI.Slider("Arms Scale", 0, 100, "%", "0%", "100%", false, rifle_ascale);
+							gui.SetValue("rbot_rifle_hitbox_arms_ps", rifle_ascale / 100);
+							rifle_lscale = SenseUI.Slider("Legs Scale", 0, 100, "%", "0%", "100%", false, rifle_lscale);
+							gui.SetValue("rbot_rifle_hitbox_legs_ps", rifle_lscale / 100);
+							rifle_autoscale = SenseUI.Checkbox("Auto Scale", rifle_autoscale);
+							gui.SetValue("rbot_rifle_hitbox_auto_ps", rifle_autoscale);
+							rifle_autoscales = SenseUI.Slider("Auto Scale Max", 0, 100, "%", "0%", "100%", false, rifle_autoscales);
+							gui.SetValue("rbot_rifle_hitbox_auto_ps_max", rifle_autoscales / 100);
+							local rifle_head = gui.GetValue("rbot_rifle_hitbox_head");
+							rifle_head = SenseUI.Checkbox("Head Points", rifle_head);
+							gui.SetValue("rbot_rifle_hitbox_head", rifle_head);
+							local rifle_neck = gui.GetValue("rbot_rifle_hitbox_neck");
+							rifle_neck = SenseUI.Checkbox("Neck Points", rifle_neck);
+							gui.SetValue("rbot_rifle_hitbox_neck", rifle_neck);
+							local rifle_chest = gui.GetValue("rbot_rifle_hitbox_chest");
+							rifle_chest = SenseUI.Checkbox("Chest Points", rifle_chest);
+							gui.SetValue("rbot_rifle_hitbox_chest", rifle_chest);
+							local rifle_stomach = gui.GetValue("rbot_rifle_hitbox_stomach");
+							rifle_stomach = SenseUI.Checkbox("Stomach Points", rifle_stomach);
+							gui.SetValue("rbot_rifle_hitbox_stomach", rifle_stomach);
+							local rifle_pelvis = gui.GetValue("rbot_rifle_hitbox_pelvis");
+							rifle_pelvis = SenseUI.Checkbox("Pelvis Points", rifle_pelvis);
+							gui.SetValue("rbot_rifle_hitbox_pelvis", rifle_pelvis);
+							local rifle_arms = gui.GetValue("rbot_rifle_hitbox_arms");
+							rifle_arms = SenseUI.Checkbox("Arms Points", rifle_arms);
+							gui.SetValue("rbot_rifle_hitbox_arms", rifle_arms);
+							local rifle_legs = gui.GetValue("rbot_rifle_hitbox_legs");
+							rifle_legs = SenseUI.Checkbox("Legs Points", rifle_legs);
+							gui.SetValue("rbot_rifle_hitbox_legs", rifle_legs);
+								else if visuals_select == 5 then
+								
+								local shotgun_autowall = (gui.GetValue("rbot_shotgun_autowall") + 1);
+								local shotgun_hitchance = gui.GetValue("rbot_shotgun_hitchance");
+								local shotgun_mindamage = gui.GetValue("rbot_shotgun_mindamage");
+								local shotgun_hitprior = (gui.GetValue("rbot_shotgun_hitbox") + 1);
+								local shotgun_bodyaim = (gui.GetValue("rbot_shotgun_hitbox_bodyaim") + 1);
+								local shotgun_method = (gui.GetValue("rbot_shotgun_hitbox_method") + 1);
+								local shotgun_baimX = gui.GetValue("rbot_shotgun_bodyaftershots");
+								local shotgun_baimHP = gui.GetValue("rbot_shotgun_bodyifhplower");
+								local shotgun_hscale = (gui.GetValue("rbot_shotgun_hitbox_head_ps") * 100);
+								local shotgun_nscale = (gui.GetValue("rbot_shotgun_hitbox_neck_ps") * 100);
+								local shotgun_cscale = (gui.GetValue("rbot_shotgun_hitbox_chest_ps") * 100);
+								local shotgun_sscale = (gui.GetValue("rbot_shotgun_hitbox_stomach_ps") * 100);
+								local shotgun_pscale = (gui.GetValue("rbot_shotgun_hitbox_pelvis_ps") * 100);
+								local shotgun_ascale = (gui.GetValue("rbot_shotgun_hitbox_arms_ps") * 100);
+								local shotgun_lscale = (gui.GetValue("rbot_shotgun_hitbox_legs_ps") * 100);
+								local shotgun_autoscale = gui.GetValue("rbot_shotgun_hitbox_auto_ps");
+								local shotgun_autoscales = (gui.GetValue("rbot_shotgun_hitbox_auto_ps_max") * 100);
+								
+								
+								
+								shotgun_hscale = SenseUI.Slider("Head Scale", 0, 100, "%", "0%", "100%", false, shotgun_hscale);
+								gui.SetValue("rbot_shotgun_hitbox_head_ps", shotgun_hscale / 100);
+								shotgun_nscale = SenseUI.Slider("Neck Scale", 0, 100, "%", "0%", "100%", false, shotgun_nscale);
+								gui.SetValue("rbot_shotgun_hitbox_neck_ps", shotgun_nscale / 100);
+								shotgun_cscale = SenseUI.Slider("Chest Scale", 0, 100, "%", "0%", "100%", false, shotgun_cscale);
+								gui.SetValue("rbot_shotgun_hitbox_chest_ps", shotgun_cscale / 100);
+								shotgun_sscale = SenseUI.Slider("Stomach Scale", 0, 100, "%", "0%", "100%", false, shotgun_sscale);
+								gui.SetValue("rbot_shotgun_hitbox_stomach_ps", shotgun_sscale / 100);
+								shotgun_pscale = SenseUI.Slider("Pelvis Scale", 0, 100, "%", "0%", "100%", false, shotgun_pscale);
+								gui.SetValue("rbot_shotgun_hitbox_pelvis_ps", shotgun_pscale / 100);
+								shotgun_ascale = SenseUI.Slider("Arms Scale", 0, 100, "%", "0%", "100%", false, shotgun_ascale);
+								gui.SetValue("rbot_shotgun_hitbox_arms_ps", shotgun_ascale / 100);
+								shotgun_lscale = SenseUI.Slider("Legs Scale", 0, 100, "%", "0%", "100%", false, shotgun_lscale);
+								gui.SetValue("rbot_shotgun_hitbox_legs_ps", shotgun_lscale / 100);
+								shotgun_autoscale = SenseUI.Checkbox("Auto Scale", shotgun_autoscale);
+								gui.SetValue("rbot_shotgun_hitbox_auto_ps", shotgun_autoscale);
+								shotgun_autoscales = SenseUI.Slider("Auto Scale Max", 0, 100, "%", "0%", "100%", false, shotgun_autoscales);
+								gui.SetValue("rbot_shotgun_hitbox_auto_ps_max", shotgun_autoscales / 100);
+								local shotgun_head = gui.GetValue("rbot_shotgun_hitbox_head");
+								shotgun_head = SenseUI.Checkbox("Head Points", shotgun_head);
+								gui.SetValue("rbot_shotgun_hitbox_head", shotgun_head);
+								local shotgun_neck = gui.GetValue("rbot_shotgun_hitbox_neck");
+								shotgun_neck = SenseUI.Checkbox("Neck Points", shotgun_neck);
+								gui.SetValue("rbot_shotgun_hitbox_neck", shotgun_neck);
+								local shotgun_chest = gui.GetValue("rbot_shotgun_hitbox_chest");
+								shotgun_chest = SenseUI.Checkbox("Chest Points", shotgun_chest);
+								gui.SetValue("rbot_shotgun_hitbox_chest", shotgun_chest);
+								local shotgun_stomach = gui.GetValue("rbot_shotgun_hitbox_stomach");
+								shotgun_stomach = SenseUI.Checkbox("Stomach Points", shotgun_stomach);
+								gui.SetValue("rbot_shotgun_hitbox_stomach", shotgun_stomach);
+								local shotgun_pelvis = gui.GetValue("rbot_shotgun_hitbox_pelvis");
+								shotgun_pelvis = SenseUI.Checkbox("Pelvis Points", shotgun_pelvis);
+								gui.SetValue("rbot_shotgun_hitbox_pelvis", shotgun_pelvis);
+								local shotgun_arms = gui.GetValue("rbot_shotgun_hitbox_arms");
+								shotgun_arms = SenseUI.Checkbox("Arms Points", shotgun_arms);
+								gui.SetValue("rbot_shotgun_hitbox_arms", shotgun_arms);
+								local shotgun_legs = gui.GetValue("rbot_shotgun_hitbox_legs");
+								shotgun_legs = SenseUI.Checkbox("Legs Points", shotgun_legs);
+								gui.SetValue("rbot_shotgun_hitbox_legs", shotgun_legs);
+									else if visuals_select == 6 then
+									
+									local scout_autowall = (gui.GetValue("rbot_scout_autowall") + 1);
+									local scout_hitchance = gui.GetValue("rbot_scout_hitchance");
+									local scout_mindamage = gui.GetValue("rbot_scout_mindamage");
+									local scout_hitprior = (gui.GetValue("rbot_scout_hitbox") + 1);
+									local scout_bodyaim = (gui.GetValue("rbot_scout_hitbox_bodyaim") + 1);
+									local scout_method = (gui.GetValue("rbot_scout_hitbox_method") + 1);
+									local scout_baimX = gui.GetValue("rbot_scout_bodyaftershots");
+									local scout_baimHP = gui.GetValue("rbot_scout_bodyifhplower");
+									local scout_hscale = (gui.GetValue("rbot_scout_hitbox_head_ps") * 100);
+									local scout_nscale = (gui.GetValue("rbot_scout_hitbox_neck_ps") * 100);
+									local scout_cscale = (gui.GetValue("rbot_scout_hitbox_chest_ps") * 100);
+									local scout_sscale = (gui.GetValue("rbot_scout_hitbox_stomach_ps") * 100);
+									local scout_pscale = (gui.GetValue("rbot_scout_hitbox_pelvis_ps") * 100);
+									local scout_ascale = (gui.GetValue("rbot_scout_hitbox_arms_ps") * 100);
+									local scout_lscale = (gui.GetValue("rbot_scout_hitbox_legs_ps") * 100);
+									local scout_autoscale = gui.GetValue("rbot_scout_hitbox_auto_ps");
+									local scout_autoscales = (gui.GetValue("rbot_scout_hitbox_auto_ps_max") * 100);
+									
+									
+									
+									scout_hscale = SenseUI.Slider("Head Scale", 0, 100, "%", "0%", "100%", false, scout_hscale);
+									gui.SetValue("rbot_scout_hitbox_head_ps", scout_hscale / 100);
+									scout_nscale = SenseUI.Slider("Neck Scale", 0, 100, "%", "0%", "100%", false, scout_nscale);
+									gui.SetValue("rbot_scout_hitbox_neck_ps", scout_nscale / 100);
+									scout_cscale = SenseUI.Slider("Chest Scale", 0, 100, "%", "0%", "100%", false, scout_cscale);
+									gui.SetValue("rbot_scout_hitbox_chest_ps", scout_cscale / 100);
+									scout_sscale = SenseUI.Slider("Stomach Scale", 0, 100, "%", "0%", "100%", false, scout_sscale);
+									gui.SetValue("rbot_scout_hitbox_stomach_ps", scout_sscale / 100);
+									scout_pscale = SenseUI.Slider("Pelvis Scale", 0, 100, "%", "0%", "100%", false, scout_pscale);
+									gui.SetValue("rbot_scout_hitbox_pelvis_ps", scout_pscale / 100);
+									scout_ascale = SenseUI.Slider("Arms Scale", 0, 100, "%", "0%", "100%", false, scout_ascale);
+									gui.SetValue("rbot_scout_hitbox_arms_ps", scout_ascale / 100);
+									scout_lscale = SenseUI.Slider("Legs Scale", 0, 100, "%", "0%", "100%", false, scout_lscale);
+									gui.SetValue("rbot_scout_hitbox_legs_ps", scout_lscale / 100);
+									scout_autoscale = SenseUI.Checkbox("Auto Scale", scout_autoscale);
+									gui.SetValue("rbot_scout_hitbox_auto_ps", scout_autoscale);
+									scout_autoscales = SenseUI.Slider("Auto Scale Max", 0, 100, "%", "0%", "100%", false, scout_autoscales);
+									gui.SetValue("rbot_scout_hitbox_auto_ps_max", scout_autoscales / 100);
+									local scout_head = gui.GetValue("rbot_scout_hitbox_head");
+									scout_head = SenseUI.Checkbox("Head Points", scout_head);
+									gui.SetValue("rbot_scout_hitbox_head", scout_head);
+									local scout_neck = gui.GetValue("rbot_scout_hitbox_neck");
+									scout_neck = SenseUI.Checkbox("Neck Points", scout_neck);
+									gui.SetValue("rbot_scout_hitbox_neck", scout_neck);
+									local scout_chest = gui.GetValue("rbot_scout_hitbox_chest");
+									scout_chest = SenseUI.Checkbox("Chest Points", scout_chest);
+									gui.SetValue("rbot_scout_hitbox_chest", scout_chest);
+									local scout_stomach = gui.GetValue("rbot_scout_hitbox_stomach");
+									scout_stomach = SenseUI.Checkbox("Stomach Points", scout_stomach);
+									gui.SetValue("rbot_scout_hitbox_stomach", scout_stomach);
+									local scout_pelvis = gui.GetValue("rbot_scout_hitbox_pelvis");
+									scout_pelvis = SenseUI.Checkbox("Pelvis Points", scout_pelvis);
+									gui.SetValue("rbot_scout_hitbox_pelvis", scout_pelvis);
+									local scout_arms = gui.GetValue("rbot_scout_hitbox_arms");
+									scout_arms = SenseUI.Checkbox("Arms Points", scout_arms);
+									gui.SetValue("rbot_scout_hitbox_arms", scout_arms);
+									local scout_legs = gui.GetValue("rbot_scout_hitbox_legs");
+									scout_legs = SenseUI.Checkbox("Legs Points", scout_legs);
+									gui.SetValue("rbot_scout_hitbox_legs", scout_legs);
+			end
+			end
+			end
+			end
+			end
+			end
 			end
 			SenseUI.EndGroup();
 		end
