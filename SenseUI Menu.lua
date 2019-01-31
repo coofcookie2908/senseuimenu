@@ -1344,8 +1344,13 @@ if SenseUI.BeginTab( "vissettings", SenseUI.Icons.visuals ) then
 				 local espwep_enable = gui.GetValue("esp_filter_enemy");
 				 local espdormantenemy = gui.GetValue("esp_dormant_enemy");
 				 local espsoundsenemy = gui.GetValue("esp_sounds_enemy");
+				 local espenemydronegun = gui.GetValue("esp_filter_dronegun");
+				 local espenemyboxoutline = gui.GetValue("esp_enemy_box_outline");
+				 local espenemyboxprecision = gui.GetValue("esp_enemy_box_precise");
+				 local espenemyname = gui.GetValue("esp_enemy_name");
 				 
 				 local espvisibility_enemy = (gui.GetValue("esp_visibility_enemy") + 1);
+				 local espbox_enemy = (gui.GetValue("esp_enemy_box") + 1);
 				 
 				 
 				 espwep_enable = SenseUI.Checkbox("Enable", espwep_enable);
@@ -1356,10 +1361,26 @@ if SenseUI.BeginTab( "vissettings", SenseUI.Icons.visuals ) then
 				gui.SetValue("esp_visibility_enemy", espvisibility_enemy-1);
 				
 			    espdormantenemy = SenseUI.Checkbox("Dormant", espdormantenemy);
-				gui.SetValue("esp_dormant_enemy", espdormantenemy);
+				gui.SetValue("esp_dormant_enemy", espdormantenemy);			
 				
-			    espdormantenemy = SenseUI.Checkbox("Dormant", espdormantenemy);
-				gui.SetValue("esp_dormant_enemy", espdormantenemy);
+				espsoundsenemy = SenseUI.Checkbox("Sounds", espsoundsenemy);
+				gui.SetValue("esp_sounds_enemy", espsoundsenemy);
+				
+				espenemydronegun = SenseUI.Checkbox("Dronegun", espenemydronegun);
+				gui.SetValue("esp_filter_dronegun", espenemydronegun);
+				
+				SenseUI.Label("Box");
+				espbox_enemy = SenseUI.Combo("espbox_enemy", { "Off", "2D", "3D", "Edges", "Machine", "Pentagon", "Hexagon" }, espbox_enemy);
+				gui.SetValue("esp_enemy_box", espbox_enemy-1);
+				
+				espenemyboxoutline = SenseUI.Checkbox("Box Outline", espenemyboxoutline);
+				gui.SetValue("esp_enemy_box_outline", espenemyboxoutline);
+				
+				espenemyboxprecision = SenseUI.Checkbox("Box Precision", espenemyboxprecision);
+				gui.SetValue("esp_enemy_box_precise", espenemyboxprecision);
+				
+				espenemyname = SenseUI.Checkbox("Name", espenemyname);
+				gui.SetValue("esp_enemy_name", espenemyname);
 				
 				
 				
